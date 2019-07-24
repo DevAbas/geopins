@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { GraphQLClient } from 'graphql-request';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -10,12 +11,16 @@ import ClearIcon from '@material-ui/icons/Clear';
 import SaveIcon from '@material-ui/icons/SaveTwoTone';
 
 import Context from '../../context';
+import { useClient } from '../../client';
+import { CREATE_PIN_MUTATION } from '../../graphql/mutations';
 
 const CreatePin = ({ classes }) => {
-  const { dispatch } = useContext(Context);
+  const client = useClient();
+  const { state, dispatch } = useContext(Context);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
   const [content, setContent] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleDeleteDraft = () => {
     setTitle('');
@@ -40,9 +45,25 @@ const CreatePin = ({ classes }) => {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    const url = await handleUploadImage();
-    console.log({ title, image, url, content });
+    try {
+      e.preventDefault();
+      setSubmitting(true);
+      const url = await handleUploadImage();
+      const { longitude, latitude } = state.draft;
+      const variables = {
+        title,
+        content,
+        image: url,
+        longitude,
+        latitude,
+      };
+      const data = await client.request(CREATE_PIN_MUTATION, variables);
+      console.log(`Created new pin ${data}`);
+      handleDeleteDraft();
+    } catch (err) {
+      setSubmitting(false);
+      console.error(`Error creating pin ${err}`);
+    }
   };
 
   return (
@@ -99,7 +120,7 @@ const CreatePin = ({ classes }) => {
           className={classes.button}
           variant='contained'
           color='secondary'
-          disabled={!title.trim() || !image || !content.trim()}
+          disabled={!title.trim() || !image || !content.trim() || submitting}
           onClick={handleSubmit}>
           Submit <SaveIcon className={classes.rightIcon} />
         </Button>

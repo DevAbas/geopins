@@ -7,7 +7,7 @@ const PinSchema = new Schema(
     content: String,
     image: String,
     latitude: Number,
-    longtitude: Number,
+    longitude: Number,
     author: { type: Schema.ObjectId, ref: 'User' },
     comments: [
       {
