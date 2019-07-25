@@ -7,17 +7,19 @@ import PinContent from './Pin/PinContent';
 import Context from '../context';
 
 const Blog = ({ classes }) => {
-  const {
-    state: { draft },
-  } = useContext(Context);
+  const { state } = useContext(Context);
+  const { draft, currentPin } = state;
   let BlogContent;
-  if (!draft) {
+  if (!draft && !currentPin) {
     BlogContent = NoContent;
-  } else if (draft) {
+  } else if (draft && !currentPin) {
     BlogContent = CreatePin;
+  } else if (!draft && currentPin) {
+    BlogContent = PinContent;
   }
   return (
     <Paper className={classes.root}>
+      {console.log(currentPin)}
       <BlogContent />
     </Paper>
   );
