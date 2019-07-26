@@ -1,6 +1,6 @@
 # GeooPins
 
-## Full-stack CRUD app allowing logged-in users to place pins on a map (with photo and description), view others' pins, and comment on pins...all updated in real time. All pins are saved to a database. Local storage is used to save user's previous map location for improved UX and load times when revisiting site.
+### Full-stack CRUD app allowing logged-in users to place pins on a map (with photo and description), view others' pins, and comment on pins...all updated in real time. All pins are saved to a database. Local storage is used to save user's previous map location for improved UX and load times when revisiting site.
 
 ### Libraries and services used...
 
