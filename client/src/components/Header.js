@@ -26,7 +26,7 @@ const Header = ({ classes }) => {
               variant='h6'
               color='inherit'
               noWrap>
-              GeoPins
+              GeooPins
             </Typography>
           </div>
           {/* Current user */}

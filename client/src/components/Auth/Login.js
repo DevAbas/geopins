@@ -32,7 +32,7 @@ const Login = ({ classes }) => {
   return (
     <div className={classes.root}>
       <Typography component='h1' variant='h3' gutterBottom noWrap>
-        Welcome to GeoPins
+        Welcome to GeooPins
       </Typography>
       <GoogleLogin
         clientId='878718101844-9p0qdpo8tb1g88oeermhn8fs9hmih3o3.apps.googleusercontent.com'
