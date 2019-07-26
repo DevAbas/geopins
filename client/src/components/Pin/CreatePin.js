@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { GraphQLClient } from 'graphql-request';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -57,11 +56,7 @@ const CreatePin = ({ classes }) => {
         longitude,
         latitude,
       };
-      const { createPin } = await client.request(
-        CREATE_PIN_MUTATION,
-        variables
-      );
-      dispatch({ type: 'CREATE_PIN', payload: createPin });
+      await client.request(CREATE_PIN_MUTATION, variables);
       handleDeleteDraft();
     } catch (err) {
       setSubmitting(false);
